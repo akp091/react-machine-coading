@@ -8,10 +8,13 @@ const TicTacToe = () => {
   const [moves, setMoves] = useState(0);
   const [result, setResult] = useState(null);
 
+  //initialise a 2D matrix
+
   const [board, setBoard] = useState(() =>
     Array.from({ length: rows }, () => Array(columns).fill(null))
   );
 
+  // Method to reset Game board
   const resetGame = () => {
     setMoves(0);
     setBoard(() =>
@@ -21,6 +24,7 @@ const TicTacToe = () => {
     setResult(null);
   };
 
+  // method to mark move on the board (update matrix value)
   const updateMatrixValue = (i, j) => {
     if (board[i][j]) {
       alert("Invalid Move");
@@ -47,6 +51,7 @@ const TicTacToe = () => {
     }
   };
 
+  // method to check winners among rows
   const checkRows = () => {
     let winner = null;
     for (let i = 0; i < board.length; i++) {
@@ -69,6 +74,7 @@ const TicTacToe = () => {
     return winner;
   };
 
+  // method to check winner among columns
   const checkColumns = () => {
     let winner = null;
     for (let i = 0; i < columns; i++) {
@@ -90,7 +96,7 @@ const TicTacToe = () => {
     }
     return winner;
   };
-
+  //  method to check winner among both diagonals
   const checkDiagonals = () => {
     let winner = null;
     let prev = board[0][0];
@@ -125,6 +131,7 @@ const TicTacToe = () => {
     return winner;
   };
 
+  // function to check overall winner
   const checkWinner = () => {
     let win;
     win = checkRows();
@@ -136,16 +143,13 @@ const TicTacToe = () => {
     }
 
     if (win) {
-      // setWinner(win);
       setResult("Player " + win + " is Winner");
-      // resetGame();
     } else if (moves == columns * rows) {
       setResult("This is a tie");
-      // resetGame();
     }
-    // checkDiagonals();
   };
 
+  // useeffect to check wineer after each move is made
   useEffect(() => {
     checkWinner();
     console.log("board :>> ", board);
