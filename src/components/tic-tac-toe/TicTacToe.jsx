@@ -5,16 +5,28 @@ const TicTacToe = () => {
   const [rows, setRows] = useState(3);
   const [columns, setColumns] = useState(3);
   const [activeUser, setActiveUser] = useState("A");
+  const [moves, setMoves] = useState(0);
+  const [result, setResult] = useState(null);
 
   const [board, setBoard] = useState(() =>
     Array.from({ length: rows }, () => Array(columns).fill(null))
   );
+
+  const resetGame = () => {
+    setMoves(0);
+    setBoard(() =>
+      Array.from({ length: rows }, () => Array(columns).fill(null))
+    );
+    setActiveUser("A");
+    setResult(null);
+  };
 
   const updateMatrixValue = (i, j) => {
     if (board[i][j]) {
       alert("Invalid Move");
       return;
     } else {
+      setMoves((prev) => prev + 1);
       let value = activeUser == "A" ? "O" : "X";
       setBoard((prev) => {
         return prev.map((row, k) => {
@@ -123,8 +135,14 @@ const TicTacToe = () => {
       }
     }
 
-    if (win) console.log("win :>> ", win);
-    else console.log("its a draw :>> "); // checkColumns();
+    if (win) {
+      // setWinner(win);
+      setResult("Player " + win + " is Winner");
+      // resetGame();
+    } else if (moves == columns * rows) {
+      setResult("This is a tie");
+      // resetGame();
+    }
     // checkDiagonals();
   };
 
@@ -148,6 +166,7 @@ const TicTacToe = () => {
           );
         })}
       </div>
+      {result && <h3>{result}</h3>}
     </>
   );
 };
