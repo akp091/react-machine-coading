@@ -1,0 +1,9 @@
+.container .active svg{
+    fill: yellow;
+    stroke: red;
+}
+
+.container .hover svg{
+    fill: rgb(49, 49, 38);
+    stroke: red;
+}
